@@ -18,5 +18,9 @@
   --black-color: #000000;   /* Black */
 }
 
+.font-secondary {
+  font-family: var(--font-secondary);
+}
+
 
 

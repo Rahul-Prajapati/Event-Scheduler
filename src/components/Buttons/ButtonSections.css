@@ -1,0 +1,27 @@
+.btn-section {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  
+  .btn {
+    padding: 1.75rem 2rem;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    line-height: 1.5rem;;
+  }
+  
+  .login {
+    background: #EFF0EC;
+    color: #1E2330;
+    border-radius: 1rem;
+  }
+  
+  .signup {
+    background: var(--blue-color);
+    color: #FFFFFF;
+    border-radius: 3rem;
+  }
+  

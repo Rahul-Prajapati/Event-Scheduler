@@ -1,0 +1,45 @@
+.integration-heading{
+  font-size: 4rem;
+  color: #1E2330;
+  text-align: center;
+  margin: 2.5rem 0;
+}
+
+.feature-grid {
+  width: 97%;
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+  
+  .feature-card {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    padding: 1rem;
+  }
+  
+  .icon {
+    font-size: 2rem;
+  }
+
+  .cards-info > h4 {
+    font-size: 1.25rem;
+    color: 1E2330;
+  }
+
+  @media (max-width: 768px) {
+    .feature-grid  {
+        display: flex;
+        flex-direction: column;
+    }
+    .Calender-Meetings {
+       flex-direction: column;
+    }
+    .image-section {
+        width: 100%;
+    }
+}
+  

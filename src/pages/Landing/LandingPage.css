@@ -1,0 +1,156 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--black-color);
+    background-color: #FBFBFB;
+}
+
+.Header {
+    margin-top: 40px;
+    background-color: #F0F0F0;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-Header {
+    display: flex;
+}
+
+.WebAppName {
+    font-size: 1.5rem;
+    font-family: var(--font-tertiary);
+    color: var(--black-color);
+    font-weight: 800;
+}
+
+.right-Header {
+    font-size: 1rem;
+    font-family: var(--font-secondary);
+    background-color: var(--blue-color);
+    color: var(--white-color);
+    padding: .5rem 1.75rem;
+    border-radius: 2rem;
+    border: none;
+}
+
+.btnH_W{
+    padding: 1rem 2rem;
+}
+
+.Demo-Section {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 80%;
+}
+
+.title {
+    font-size: 4rem;
+    width: 75%;
+    align-self: center;
+    margin-top: .5rem;
+}
+
+.button-div{
+    margin-top: 1rem;
+}
+
+.BookingSnap {
+    width: 100%;
+}
+
+.feature-heading-1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 1rem;
+}
+
+.feature-heading-2 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 1rem;
+}
+
+.Calender-Meetings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 1rem 0rem;
+}
+
+.Text-section h4{
+    font-size: 2.25rem;
+    font-weight: 600;  
+    margin-bottom: 2rem;
+}
+
+.Text-section p{
+    font-size: 1.25rem; 
+    margin-bottom: 1rem;
+}
+
+.text-style{
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-size: 1.25rem;
+}
+
+.image-section {
+    display: flex;
+    width: 50%;
+}
+
+.Avail_Img {
+    z-index: 2;
+}
+
+.cal_Img {
+    position: relative;
+    right: 206px
+}
+
+.section-container{
+    width: 80%;
+}
+
+
+@media (max-width: 768px) {
+    .Container {
+        padding: 0rem;
+    }
+    .logo{
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+    .WebAppName{
+        font-size: 1.25rem;
+    }
+    .Demo-Section{
+        width: 100%;
+    }
+    .Calender-Meetings {
+       flex-direction: column;
+       width: 100%;
+    }
+    .Text-section{
+        width: 100%;
+        text-align: left;
+    }
+    .image-section {
+        width: 100%;
+    }
+    .title {
+        font-size: 1.5rem;
+    }
+    .section-container{
+        width: 90%;
+    }
+}
