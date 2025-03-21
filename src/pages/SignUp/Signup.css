@@ -1,0 +1,105 @@
+.Auth-Container{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.Auth-left{
+    display: flex;
+    flex-direction: column;
+    width: 62.5%;
+}
+
+.LogoAuth{
+    margin: 1.5rem 0 0 1.5rem;
+}
+
+.Auth-right{
+    height: 99%;
+    width: 38.5%;
+    object-fit: contain;
+}
+
+.auth-frame{
+    width: 100%;
+    height: 100%;
+}
+
+/* .Signup-section{
+    width: 55%;
+    margin: 0% 23%;
+} */
+
+.Signup-form{
+    justify-self: center;
+    width: 48%;
+}
+
+label{
+    color: #666666;
+}
+
+.signup-input{
+    border: .2px solid #666666;
+    border-radius: .2rem;
+    height: 1.5rem;
+    color: #482121;
+}
+
+.form-title{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-title > h3 {
+    margin: 1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333333;
+}
+
+.form-title > p {
+    margin: 1.5rem;
+    font-size: .75rem;
+    text-decoration: underline;
+    color: var(--blue-color);
+    cursor: pointer;
+}
+
+.credentials-box{
+    font-size: .75rem;
+    display: flex;
+    flex-direction: column;
+    padding: .8rem;
+    gap: .5rem;
+}
+
+.checkbox-div{
+    display: flex;
+    padding: .8rem;
+    gap: 5px;
+}
+
+span {
+    text-decoration: underline;
+}
+
+.btn-createAcc{
+    font-family: var(--font--primary);
+    padding: .8rem;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #FFFFFF;
+    background-color: #E0E2D9;
+    border-radius: 3rem;
+    border: .1rem solid #E0E2D9;
+    width: 100%;
+}
+
+.TnC-description{
+    margin-top: 3rem;
+    text-align: center;
+    font-family: var(--font-secondary);
+    font-size: .75rem;
+}

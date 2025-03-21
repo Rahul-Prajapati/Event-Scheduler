@@ -7,8 +7,10 @@ import CalenderImg from '../../assets/CalenderHomePagePic.png'
 import Testimonials from '../../components/Testimonial/Testimonials'
 import FeatureGrid from '../../components/Features/FeatureGrid'
 import Footer from '../../components/Footer/Footer'
+import { useNavigate } from 'react-router-dom'
 
 function LandingPage() {
+  const navigate = useNavigate();
   return (
     <div className='Container'>
 
@@ -21,7 +23,7 @@ function LandingPage() {
 
         </div>
 
-        <button className='right-Header'>
+        <button className='right-Header' onClick={() => navigate('/signup')}>
           Sign up free
         </button>
 
@@ -35,7 +37,7 @@ function LandingPage() {
 
         <div className='button-div'>
 
-          <button className='right-Header btnH_W'>
+          <button className='right-Header btnH_W' onClick={() => navigate('/signup')}>
             Sign up free
           </button>
         </div>

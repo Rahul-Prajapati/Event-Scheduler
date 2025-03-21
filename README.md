@@ -16,3 +16,11 @@ If you are developing a production application, we recommend using TypeScript an
 Created 4 pages and sets their routes in App.jsx file.
 
 Created Css variables for font and color. 
+
+## landing Page
+
+Created landing page with signup and login button to navigate user to Signup and Signin pages
+
+## Auth & Preferences
+
+Created signup and login pages with validations and Preferences pages to get username and preference from user.

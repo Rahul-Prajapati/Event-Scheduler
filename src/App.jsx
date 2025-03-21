@@ -5,6 +5,7 @@ import LandingPage from './pages/Landing/LandingPage'
 import LoginPage from './pages/Login/LoginPage'
 import Preferences from './pages/Preferences/Preferences'
 import SignupPage from './pages/SignUp/SignupPage'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />} />
 
           </Routes>
+          <Toaster />
         </BrowserRouter>
       
     </>
