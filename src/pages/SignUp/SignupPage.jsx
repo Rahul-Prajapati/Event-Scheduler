@@ -70,13 +70,12 @@ const SignupPage = () => {
 
     const data = await response.json();
     if (data.token) {
-      // toast.success("Account created successfully")
-      toast.success(data.message)
+      toastSuccess(data.message)
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       navigate('/preferences');
     } else {
-      toast.error("Something went wrong")
+      toastError("Something went wrong")
     }
   };
 

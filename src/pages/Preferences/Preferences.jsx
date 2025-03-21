@@ -3,7 +3,7 @@ import AuthFrame from '../../assets/Auth_RSideImg.png'
 import { useEffect, useState } from 'react'
 import './Preferences.css'
 import { useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
+import { toastSuccess ,toastError } from '../../utils'
 
 const Preferences = () => {
 
@@ -58,11 +58,11 @@ const Preferences = () => {
     console.log(data.user)
     if (data.user) {
       localStorage.setItem("user", JSON.stringify(data.user));
-      toast.success(data.message)
+      toastSuccess(data.message)
       navigate('/dashboard');
     }
     else {
-      toast.error("Something went wrong")
+      toastError("Something went wrong")
     }
   };
 
