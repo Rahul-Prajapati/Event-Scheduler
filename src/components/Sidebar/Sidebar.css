@@ -1,0 +1,77 @@
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+    
+  /* Sidebar */
+  .sidebar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: #FFFFFF;
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  
+  /* Dashboard Logo */
+  .DashLogo{
+    padding: 2rem;
+
+  }
+
+
+  /* Menu List */
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Default Menu Items */
+  .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    font-size: 16px;
+    color: #676767;
+    cursor: pointer;
+  }
+  
+  /* Icons */
+  .sidebarIcon{
+    margin-right: 10px;
+    height: 2rem;
+    width: 2rem;
+  }
+  
+  /* Active (Selected) Menu Item */
+  .menu-item.active {
+    background: #F3F3F1; 
+    color: var(--blue-color);
+    font-weight: bold;
+  }
+  
+  /* Curved Effect for Adjacent Items */
+  .menu-item.above-selected {
+    border-bottom-right-radius: 20px;
+    margin-bottom: -1px; /* Slight overlap */
+  }
+  
+  .menu-item.below-selected {
+    border-top-right-radius: 20px;
+    margin-top: -1px; /* Slight overlap */
+  }
+  
+  .dashBtnCreate{
+    padding: 1rem;
+  }
+
+  .SidebarDown{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    margin: 1rem 0rem;
+  }

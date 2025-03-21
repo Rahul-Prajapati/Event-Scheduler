@@ -75,7 +75,7 @@ const SignupPage = () => {
       localStorage.setItem("user", JSON.stringify(data.user));
       navigate('/preferences');
     } else {
-      toastError("Something went wrong")
+      toastError(data.message)
     }
   };
 
@@ -85,7 +85,6 @@ const SignupPage = () => {
 
     if (validateForm()) {
       handleSignup();
-      console.log("Form submitted successfully", formData);
     }
 
   }
