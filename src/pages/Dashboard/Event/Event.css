@@ -1,0 +1,5 @@
+.EventContainer{
+    display: grid;
+    grid-template-columns: .15fr 1fr;
+    background-color: #F3F3F1;
+}

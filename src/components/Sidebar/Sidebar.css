@@ -28,26 +28,42 @@
     padding: 0;
     margin: 0;
   }
+
+  .tabname{
+    text-decoration: none;
+  }
   
   /* Default Menu Items */
-  .menu-item {
+  /* .menu-item {
+    width: 100%;
     display: flex;
     align-items: center;
-    padding: 12px;
     font-size: 16px;
     color: #676767;
     cursor: pointer;
+  } */
+
+  .menu-link{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.75rem;
+    color: #676767;
   }
   
   /* Icons */
   .sidebarIcon{
     margin-right: 10px;
-    height: 2rem;
-    width: 2rem;
   }
   
   /* Active (Selected) Menu Item */
-  .menu-item.active {
+  /* .menu-item.active {
+    background: #F3F3F1; 
+    color: var(--blue-color);
+    font-weight: bold;
+  } */
+
+  .active {
     background: #F3F3F1; 
     color: var(--blue-color);
     font-weight: bold;
@@ -64,14 +80,18 @@
     margin-top: -1px; /* Slight overlap */
   }
   
-  .dashBtnCreate{
-    padding: 1rem;
-  }
+  .read-button-inverted{
+  color: var(--white-color) !important;
+  background: var(--blue-color) !important;
+}
+
+.createDiv{
+  margin: 16px auto;
+}
 
   .SidebarDown{
+    margin-top: auto;
     display: flex;
-    flex-direction: column;
-    flex: 1;
-    align-items: center;
-    margin: 1rem 0rem;
+    justify-content: center;
+    margin-bottom: 1rem;
   }
