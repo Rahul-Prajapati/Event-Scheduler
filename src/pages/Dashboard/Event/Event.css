@@ -1,5 +1,11 @@
-.EventContainer{
+.DashboardContainer{
     display: grid;
     grid-template-columns: .15fr 1fr;
     background-color: #F3F3F1;
 }
+
+.dashboard-wrapper{
+    width: 95%;
+    margin: 0 auto;
+}
+

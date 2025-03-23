@@ -1,0 +1,20 @@
+.header-wrapper{
+    position: relative;
+    width: 95%;
+    margin: 1.5rem 0rem;
+}
+
+.header-title{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.header-Subtitle{
+    font-size: .9rem;
+}
+
+.addNewEventDiv{
+    position: absolute;
+    right: 0;
+    top: 1rem;
+}
