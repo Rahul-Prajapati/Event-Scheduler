@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Header.css"
 
 const Header = () => {
@@ -12,6 +12,7 @@ const headers = {
 };
       
   const location = useLocation();
+  const navigate = useNavigate();
   const currentHeader = headers[location.pathname] || { title: "", subtitle: "" };
 
   return (

@@ -5,9 +5,15 @@ import { FaCalendarAlt } from "react-icons/fa"; // Booking (Calendar) icon
 import { FaClock } from "react-icons/fa"; // Availability (Clock) icon
 import { FaCog } from "react-icons/fa";
 import Logo from '../../assets/WebAppColorLogo.png'
+import ProfilePic from "../../assets/UserDP.png";
 import './Sidebar.css'
 
+
 const Sidebar = ({ activeItem, setActiveItem }) => {
+
+    const userData = JSON.parse(localStorage.getItem("user") || "{}");
+
+    const { firstname, lastname } = userData;
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -29,18 +35,6 @@ const Sidebar = ({ activeItem, setActiveItem }) => {
             </div>
             <ul className="menu">
                 {menuItems.map((item, index) => (
-                    // <li
-                    //     key={item}
-                    //     className={`menu-item ${item === activeItem ? "active" : ""
-                    //         } ${index === menuItems.indexOf(activeItem) - 1 ? "above-selected" : ""
-                    //         } ${index === menuItems.indexOf(activeItem) + 1 ? "below-selected" : ""
-                    //         }`}
-                    //     onClick={() => setActiveItem(item)}
-                    // >
-                    //     <span className="sidebarIcon">{icons[index]}</span>
-                    //     <span>{item}</span>
-                    // </li>
-
                     <li key={item} className="menu-item">
                         <NavLink
                             to={`/${item.toLowerCase()}`}
@@ -70,10 +64,10 @@ const Sidebar = ({ activeItem, setActiveItem }) => {
             )}
 
             <div className="SidebarDown">
-                <button
-                    className='read-button dashBtnCreate'>
-                    profile
-                </button>
+                <div className='logoutDiv'>
+                    <img className='userDP' src={ProfilePic} alt="UserDP" />
+                    <p>{firstname} {lastname}</p>
+                </div>
             </div>
 
 

@@ -3,6 +3,7 @@ import "./CreateEvent.css"
 import ProfilePic from "../../../assets/UserDP.png"
 import Sidebar from '../../../components/Sidebar/Sidebar'
 import Header from '../../../components/Header/Header';
+import { toastSuccess, toastError } from '../../../utils';
 
 function CreateEvent() {
   // const registeredUsers = ["qwe@asd.com", "rty@asd.com"];
@@ -111,8 +112,10 @@ function CreateEvent() {
       }
 
       const data = await response.json();
+      toastSuccess({message});
       console.log("Success:", data);
     } catch (error) {
+      toastError({message});
       console.error("Error:", error);
     }
 

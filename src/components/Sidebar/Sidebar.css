@@ -95,3 +95,18 @@
     justify-content: center;
     margin-bottom: 1rem;
   }
+
+.logoutDiv{
+  width: 90%;
+  display: flex;
+  border: 1px solid #000000;
+  align-items: center;
+  padding: .5rem;
+  gap: .5rem;
+  border-radius: 2rem;
+}
+
+.userDP{
+  height: 2rem;
+  font-weight: 2rem;
+}

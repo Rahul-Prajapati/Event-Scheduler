@@ -1,0 +1,35 @@
+.Settings-wrapper{
+    background: white;
+    border-radius: 1rem;
+    /* margin: 2rem; */
+    padding: 1.5rem ;
+}
+
+.line{
+    border-top: 1px solid #737373;
+}
+
+.credentials-box{
+    width: 50%;
+    padding: 1.5rem;
+}
+
+.Setting-label{
+    color: #5E5E5E;
+}
+
+.save-Div{
+    display: flex;
+    justify-content: end;
+}
+
+.btn-save{
+    border: none;
+    margin: 2rem;
+    background-color: var(--blue-color);
+    color: var(--white-color);
+    width: 12rem;
+    height: 3rem;
+    font-size: 18px;
+    border-radius: 2rem;
+}
