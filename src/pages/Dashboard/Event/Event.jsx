@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Event.css'
 import Sidebar from '../../../components/Sidebar/Sidebar'
 import Header from '../../../components/Header/Header';
@@ -6,38 +6,41 @@ import { toastSuccess, toastError } from '../../../utils';
 import { CiEdit } from "react-icons/ci";
 import { FiCopy } from "react-icons/fi";
 import { FaEdit, FaTrash, FaToggleOn, FaToggleOff } from "react-icons/fa";
+import { useEvent } from '../../../context/EventContext';
+import { useNavigate } from 'react-router-dom';
 
 function Events() {
 
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { userId, events, loading, GetEventDetails, DeleteEventDetails, toggleEventStatus}   = useEvent(useContext);
+
+  const [copiedId, setCopiedId] = useState(null);
 
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
 
-  const userId = userData._id;
+  const navigate = useNavigate();
+
+  const copyToClipboard = async (eventId, link) => {
+    try {
+      await navigator.clipboard.writeText(link);
+      setCopiedId(eventId); // Track copied card
+      setTimeout(() => setCopiedId(null), 2000);
+      toastSuccess("Copied Event Meet Link"); // Reset after 2 seconds
+    } catch (error) {
+      toastError("Failed to copy:");
+      console.error("Failed to copy:", error);
+    }
+  };
 
   const formatDateDDMON = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
   };
 
-  useEffect(() => {
-    if (!userId) return;
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/event/user/${userId}`);
-        const data = await response.json();
-        console.log(data)
-        setEvents(data);
-      } catch (error) {
-        toastError(error);
-        console.error("Error fetching events:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEvents();
-  }, [userId]);
+  useEffect(()=>{
+
+    GetEventDetails();
+
+},[userId])
 
   return (
     <div className='DashboardContainer'>
@@ -52,11 +55,10 @@ function Events() {
 
           {/*  */}
 
-
           <div className="event-grid">
             {loading ? (
               <p>Loading events...</p>
-            ) : (
+            ) : ( 
               events.map(event => (
                 <div
                   key={event._id}
@@ -71,7 +73,7 @@ function Events() {
                     <p style={{color: event.backgroundColor}}>{event.time} {event.ampm}</p>
                     <span className='color7E'>{event.duration} hour, {event.description}</span>
 
-                    <button className='EditIcon ICONS' onClick={() => console.log("Edit Event", event._id)}>
+                    <button className='EditIcon ICONS' onClick={() => navigate(`/createEvent/${event._id}`)}>
                         <CiEdit size={20} />
                       </button>
                   </div>
@@ -80,28 +82,24 @@ function Events() {
                     <div className="event-icons">
                       <button  
                       style={{ color: event.isActive ? event.backgroundColor : "#676767" }}
-                      className="ICONS" onClick={() => toggleEventStatus(event._id)}>
+                      className="ICONS" onClick={() => toggleEventStatus(event._id, event.isActive)}>
                         {event.isActive ? <FaToggleOn size={20} /> : <FaToggleOff size={20} />}
                       </button>
 
-                      <button className='ICONS' onClick={() => console.log("Copy Event", event._id)}>
+                      <button className='ICONS' onClick={() => copyToClipboard(event._id, event.eventLink) }>
                         <FiCopy size={20} />
                       </button>
 
-                      <button className='ICONS's onClick={() => deleteEvent(event._id)}>
+                      <button className='ICONS's onClick={() => DeleteEventDetails(event._id)}>
                         <FaTrash size={20} />
                       </button>
 
                     </div>
-
-
                   
                 </div>
               ))
             )}
           </div>
-
-
 
           {/*  */}
         </div>

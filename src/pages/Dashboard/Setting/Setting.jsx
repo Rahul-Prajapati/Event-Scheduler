@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
 import Sidebar from '../../../components/Sidebar/Sidebar'
 import Header from '../../../components/Header/Header'
+import { toastSuccess, toastError } from '../../../utils'
 import "./Setting.css"
 
 function Setting() {
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user ? user._id : null;
+  const {firstname, lastname, email } = user;
+
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
     password: "",
     confirm_password: "",
 });
@@ -17,6 +22,27 @@ const handleChange = (e) => {
   const updatedFormData = { ...formData, [e.target.name]: e.target.value };
 setFormData(updatedFormData);
 localStorage.setItem("storedUser", JSON.stringify(updatedFormData));
+};
+
+const handleSave = async () => {
+  const { firstname, lastname, email, password} = formData;
+  const response = await fetch(`http://localhost:5000/api/user/profile_update/${userId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json" ,
+      "Authorization": `${localStorage.getItem("token")}`
+    },
+    body: JSON.stringify({ firstname, lastname, email, password }),
+  });
+  
+  const data = await response.json();
+  console.log(data);
+  if (data) {
+    toastSuccess("Profile updated successfully")
+      localStorage.setItem("storedUser", JSON.stringify(formData));
+  } else {
+    toastError("Something went wrong")
+  }
 };
 
   return (
@@ -99,11 +125,8 @@ localStorage.setItem("storedUser", JSON.stringify(updatedFormData));
           </div>
 
           <div className='save-Div'>
-            <button className='btn-save' onClick={""} style={{ marginRight: "1.5rem" }} >Save</button>
+            <button className='btn-save' onClick={handleSave} style={{ marginRight: "1.5rem" }} >Save</button>
           </div>
-
-
-
 
         </div>
 

@@ -10,12 +10,14 @@ import Booking from './pages/Dashboard/Booking/Booking'
 import CreateEvent from './pages/Dashboard/CreateEvent/CreateEvent'
 import Events from './pages/Dashboard/Event/Event'
 import Setting from './pages/Dashboard/Setting/Setting'
+import { EventProvider } from './context/EventContext'
 
 
 function App() {
 
   return (
     <>
+      <EventProvider>
       <BrowserRouter>
           <Routes>
             <Route path='/' element={<LandingPage />} />
@@ -34,9 +36,12 @@ function App() {
             <Route path="/settings" element={<Setting />} />
             <Route path="/createEvent" element={<CreateEvent />} />
 
+            <Route path="/createEvent/:eventId" element={<CreateEvent />} />
+
           </Routes>
           <Toaster />
         </BrowserRouter>
+        </EventProvider>
       
     </>
   )

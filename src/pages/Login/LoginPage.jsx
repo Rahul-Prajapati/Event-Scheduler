@@ -29,7 +29,7 @@ const LoginPage = () => {
       toastSuccess(data.message);
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      navigate('/dashboard');
+      navigate('/events');
     }
     else {
       toastError(data.message);

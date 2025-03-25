@@ -1,23 +1,22 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "./CreateEvent.css"
 import ProfilePic from "../../../assets/UserDP.png"
 import Sidebar from '../../../components/Sidebar/Sidebar'
 import Header from '../../../components/Header/Header';
 import { toastSuccess, toastError } from '../../../utils';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEvent } from '../../../context/EventContext';
 
 function CreateEvent() {
-  // const registeredUsers = ["qwe@asd.com", "rty@asd.com"];
+
+  const navigate = useNavigate();
+
+  const { eventId } = useParams(); 
+  const { events, CreateNewEvent, UpdateEventDetails } = useEvent(useContext);
 
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
 
   const { username } = userData;
-  const [step, setStep] = useState(1);
-
-  const circles = [
-    { id: 1, color: "#342B26" },
-    { id: 2, color: "#258719" },
-    { id: 3, color: "#000000" },
-  ];
 
   const [formData, setFormData] = useState({
     eventTopic: "",
@@ -34,6 +33,48 @@ function CreateEvent() {
     emails: [],
   });
 
+  const handleEditEvent = (selectedEvent) => {
+    setFormData({
+        eventTopic: selectedEvent.topic || "",  // Mapping topic → eventTopic
+        password: selectedEvent.password || "",
+        hostName: username, // Mapping hostname → hostName
+        description: selectedEvent.description || "",
+        date: selectedEvent.date || "",
+        time: selectedEvent.time || "",
+        meridian: selectedEvent.ampm || "AM", // Mapping ampm → meridian
+        timezone: selectedEvent.timezone || "(UTC +5:30 Delhi)",
+        duration: `${selectedEvent.duration} hour` || "1 hour", // Ensure proper formatting
+        bgColor: selectedEvent.backgroundColor || "", // Mapping backgroundColor → bgColor
+        link: selectedEvent.eventLink || "", // Mapping eventLink → link
+        emails: selectedEvent.participants 
+            ? selectedEvent.participants.map(p => p.email) 
+            : (""), // Extracting emails from participants
+    });
+};
+
+  useEffect(() => {
+    if (events.length > 0) {
+        const selectedEvent = events.find(event => event._id === eventId);
+        console.log(selectedEvent);
+        if (selectedEvent) {
+          console.log(selectedEvent);
+          
+          handleEditEvent(selectedEvent);
+          // console.log(formData);  
+          // localStorage.setItem("EditForm", JSON.stringify(formData));
+        }
+    }
+}, [eventId, events]);
+
+
+  const [step, setStep] = useState(1);
+
+  const circles = [
+    { id: 1, color: "#342B26" },
+    { id: 2, color: "#258719" },
+    { id: 3, color: "#000000" },
+  ];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -46,8 +87,10 @@ function CreateEvent() {
   const handleCircleClick = (value) => {
     setFormData((prev) => ({
       ...prev,
-      bgColor: value,  // Correct way to update bgColor
+      bgColor: value,  
     }));
+
+    console.log(formData.bgColor);
   }
 
 
@@ -80,44 +123,32 @@ function CreateEvent() {
 
   const handleNewMeeting = async () => {
 
+    console.log(formData);
+
 
     const payload = {
       hostname: userData._id,
       topic: formData.eventTopic,
       password: formData.password,
       description: formData.description,
-      date: formData.date,  // No need to format here
+      date: formData.date,  
       time: formData.time,
       ampm: formData.meridian,
       timezone: formData.timezone,
       duration: formData.duration, // Sent as string, backend converts it
-      backgroundColor: formData.backgroundColor || "#1877F2",
+      backgroundColor: formData.bgColor,
       eventLink: formData.link,
       participants: formData.emails, // Sent as array, backend ensures ObjectIds
-      isActive: true,
-      status: "Upcoming",
     };
 
-    try {
-      const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/event/createEvent`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
 
-      if (!response.ok) {
-        throw new Error("Failed to submit form data");
-      }
-
-      const data = await response.json();
-      toastSuccess({message});
-      console.log("Success:", data);
-    } catch (error) {
-      toastError({message});
-      console.error("Error:", error);
+    { eventId ? 
+      
+      UpdateEventDetails(eventId,payload,navigate)
+    :
+      CreateNewEvent(payload,navigate)
     }
+
 
 
   }
@@ -134,13 +165,7 @@ function CreateEvent() {
 
       <Header />
 
-    
-
-
-     
-
       <div className='creation-container'>
-
 
         <h1 className='creation-heading'>Add Event</h1>
 
@@ -173,8 +198,6 @@ function CreateEvent() {
                     ></div>
                   ))}
                 </div>
-
-
 
               </div>
 
@@ -254,7 +277,6 @@ function CreateEvent() {
 
         <div className='event-form'>
 
-
           {step === 1 ? <div>
 
             <div className="form-row">
@@ -322,9 +344,6 @@ function CreateEvent() {
 
             <div>
 
-
-
-
               <div className="form-group">
                 <label>Add Link</label>
                 <input
@@ -342,6 +361,7 @@ function CreateEvent() {
                 <input
                   type="text"
                   placeholder="example1@gmail.com, example2@gmail.com"
+                  value={formData.emails.join(", ")}
                   onBlur={handleEmailChange} // Update on blur (lose focus)
                   onChange={handleEmailChange} // Update in real-time
                 />
@@ -354,7 +374,7 @@ function CreateEvent() {
         </div>
 
         <div className="button-group">
-          <button type="button" className="cancel-btn">Cancel</button>
+          <button type="button" className="cancel-btn" onClick={()=> setStep(1)}>Cancel</button>
           <button type="submit" className="save-btn" onClick={handleSave}>Save</button>
         </div>
 
@@ -364,10 +384,7 @@ function CreateEvent() {
 
       </div>
 
-
     </div>
-
-      
 
     </div>
 
