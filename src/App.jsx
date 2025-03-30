@@ -11,6 +11,8 @@ import CreateEvent from './pages/Dashboard/CreateEvent/CreateEvent'
 import Events from './pages/Dashboard/Event/Event'
 import Setting from './pages/Dashboard/Setting/Setting'
 import { EventProvider } from './context/EventContext'
+import { BookEventProvider } from './context/BookEventContext'
+import Availability from './pages/Dashboard/Availability/Availability'
 
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
   return (
     <>
       <EventProvider>
+        <BookEventProvider>
       <BrowserRouter>
           <Routes>
             <Route path='/' element={<LandingPage />} />
@@ -32,7 +35,7 @@ function App() {
 
             <Route path="/events" element={<Events />} />
             <Route path="/booking" element={<Booking />} />
-            {/* <Route path="/availability" element={<Availability />} /> */}
+            <Route path="/availability" element={<Availability />} />
             <Route path="/settings" element={<Setting />} />
             <Route path="/createEvent" element={<CreateEvent />} />
 
@@ -41,6 +44,7 @@ function App() {
           </Routes>
           <Toaster />
         </BrowserRouter>
+        </BookEventProvider>
         </EventProvider>
       
     </>

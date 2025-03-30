@@ -3,8 +3,11 @@ import Sidebar from '../../../components/Sidebar/Sidebar'
 import Header from '../../../components/Header/Header'
 import { toastSuccess, toastError } from '../../../utils'
 import "./Setting.css"
+import { useNavigate } from 'react-router-dom'
 
 function Setting() {
+
+  const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user._id : null;
@@ -22,11 +25,12 @@ const handleChange = (e) => {
   const updatedFormData = { ...formData, [e.target.name]: e.target.value };
 setFormData(updatedFormData);
 localStorage.setItem("storedUser", JSON.stringify(updatedFormData));
+console.log(formData);
 };
 
 const handleSave = async () => {
   const { firstname, lastname, email, password} = formData;
-  const response = await fetch(`http://localhost:5000/api/user/profile_update/${userId}`, {
+  const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/user/profile_update/${userId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json" ,
@@ -35,14 +39,24 @@ const handleSave = async () => {
     body: JSON.stringify({ firstname, lastname, email, password }),
   });
   
-  const data = await response.json();
-  console.log(data);
-  if (data) {
-    toastSuccess("Profile updated successfully")
-      localStorage.setItem("storedUser", JSON.stringify(formData));
-  } else {
-    toastError("Something went wrong")
-  }
+  if (!response.ok) {
+    toastError("Something went wrong. Please try again later.");
+    return;
+}
+
+const data = await response.json();
+console.log(data);
+if (data.logout) {
+    toastSuccess("Profile updated successfully. Please log in again.");
+    localStorage.removeItem("token"); // Remove JWT token
+    navigate("/signin"); // Redirect to login
+} else if (data) {
+    toastSuccess("Profile updated successfully");
+    localStorage.setItem("storedUser", JSON.stringify(formData));
+} else {
+    toastError("Something went wrong");
+}
+
 };
 
   return (

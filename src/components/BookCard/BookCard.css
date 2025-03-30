@@ -1,0 +1,23 @@
+.BookEventCard{
+    margin: 1rem;
+    width: 95%;
+    display: grid;
+    grid-template-columns: .3fr .3fr .5fr .2fr;
+    gap: 10%;
+}
+
+.EventTimeDetails{
+    color: var(--blue-color);
+    font-weight: 300;
+}
+
+.eventTopic{
+    font-size: 18px;
+    color: #454545;
+}
+
+.ViewParticipant{
+    color: #6D6D6D;
+    border: none;
+    background: var(--white-color);
+}

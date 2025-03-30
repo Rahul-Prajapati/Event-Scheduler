@@ -18,12 +18,20 @@ export const EventProvider = ({ children }) => {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    useEffect(()=>{
+
+        GetEventDetails();
+    
+    },[userId])
+
     const CreateNewEvent = async(payload, navigate) =>{
         try {
             const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/event/createEvent`, {
               method: "POST",
-              headers: {
+              headers:
+              {
                 "Content-Type": "application/json",
+                "Authorization": `${localStorage.getItem("token")}`
               },
               body: JSON.stringify(payload),
             });
@@ -49,14 +57,21 @@ export const EventProvider = ({ children }) => {
         if (!userId) return;
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/event/user/${userId}`);
+            const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/event/host/${userId}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `${localStorage.getItem("token")}`
+                }
+            });
+            
             const data = await response.json();
             console.log(data)
             setEvents(data);
           } catch (error) {
             toastError(error);
           } finally {
-            if(events.length > 0)
+            // if(events.length > 0)
                     setLoading(false);
           }
 
@@ -98,7 +113,7 @@ export const EventProvider = ({ children }) => {
                 method: "DELETE",
                 headers: { 
                     "Content-Type": "application/json",
-                    "Authorization": `${localStorage.getItem("token")}` // If authentication is required
+                    "Authorization": `${localStorage.getItem("token")}` 
                 }
             });
     
@@ -122,21 +137,38 @@ export const EventProvider = ({ children }) => {
     // Function to change event status (boolean toggle)
     const toggleEventStatus = async (eventId, currentStatus) => {
 
-        console.log(eventId, currentStatus)
+        console.log(eventId, !currentStatus)
         try {
-            const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/event/update-status?eventId=${eventId}&isActive=${!currentStatus}`, {
+            // const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/event/update-status?eventId=${eventId}&isActive=${!currentStatus}`, {
+            //     method: "PUT",
+            //     headers:
+            //     {
+            //         "Content-Type": "application/json",
+            //         "Authorization": `${localStorage.getItem("token")}`
+            //     },
+            // });
+
+            const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/event/update-status`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify({
+                    eventId: eventId,  
+                    isActive: !currentStatus
+                })
             });
+
 
             if (!response.ok) throw new Error("Failed to toggle event status");
 
             const data = await response.json();
             console.log(data);
-            // toastSuccess(updatedEvent.message);
-            setEvents(prevEvents => prevEvents.map(event => event._id === eventId ? { ...event, isActive: updatedEvent.isActive} : event));
+            toastSuccess(data.message);
+            setEvents(prevEvents => prevEvents.map(event => event._id === eventId ? { ...event, isActive: data.isActive} : event));
         } catch (error) {
-            // toastError(updatedEvent.message);
+            toastError(updatedEvent.message);
             console.error("Error toggling event status:", error);
         }
     };

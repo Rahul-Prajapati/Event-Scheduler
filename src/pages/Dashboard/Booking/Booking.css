@@ -1,0 +1,47 @@
+.booking-container{
+    border-radius: 3rem;
+    background-color: var(--white-color);
+    padding: 1rem;
+    height: 80%;
+}
+
+
+.tabs-container {
+    width: 100%;
+  }
+  
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid rgb(0, 0,0,0.35);
+  }
+  
+  .tab-button {
+    position: relative;
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: var(--black-color);
+  }
+  
+  .tab-button.activeStatus {
+    color: var(--blue-color);
+  }
+  
+  .tab-button.activeStatus::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2.5px;
+    background-color: var(--blue-color);
+    border-radius: 5px;
+  }
+  
+  .tab-content {
+    padding: 10px;
+    font-size: 16px;
+  }
+  

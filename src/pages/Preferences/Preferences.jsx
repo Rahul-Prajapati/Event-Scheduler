@@ -59,7 +59,7 @@ const Preferences = () => {
     if (data.user) {
       localStorage.setItem("user", JSON.stringify(data.user));
       toastSuccess(data.message)
-      navigate('/dashboard');
+      navigate('/events');
     }
     else {
       toastError("Something went wrong")

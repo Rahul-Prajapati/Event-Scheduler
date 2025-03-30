@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import './Event.css'
 import Sidebar from '../../../components/Sidebar/Sidebar'
 import Header from '../../../components/Header/Header';
-import { toastSuccess, toastError } from '../../../utils';
+import { toastSuccess, toastError, formatDateDDMON } from '../../../utils';
 import { CiEdit } from "react-icons/ci";
 import { FiCopy } from "react-icons/fi";
 import { FaEdit, FaTrash, FaToggleOn, FaToggleOff } from "react-icons/fa";
@@ -31,16 +31,16 @@ function Events() {
     }
   };
 
-  const formatDateDDMON = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
-  };
+  // const formatDateDDMON = (dateString) => {
+  //   const date = new Date(dateString);
+  //   return date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
+  // };
 
-  useEffect(()=>{
+//   useEffect(()=>{
 
-    GetEventDetails();
+//     GetEventDetails();
 
-},[userId])
+// },[userId])
 
   return (
     <div className='DashboardContainer'>

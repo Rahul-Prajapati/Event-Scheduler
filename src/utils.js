@@ -7,3 +7,8 @@ export const toastSuccess = (msg) => {
 export const toastError = (msg) => {
     toast.error(msg);
 }
+
+export const formatDateDDMON = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB", { weekday: "long", day: "2-digit", month: "short" });
+  };
