@@ -43,7 +43,7 @@ const MyCalendar = () => {
           start,
           end,
           title: event.topic,
-          backgroundColor: event.isActive ? event.backgroundColor : "#ccc",
+          backgroundColor: event.isActive ? event.backgroundColor : "#676767",
         };
       });
 
@@ -140,7 +140,7 @@ const MyCalendar = () => {
         eventPropGetter={(event) => ({
           style: { backgroundColor: "rgba(14, 165, 233, 0.1)", borderLeft: "4px solid #3B82F6" },
         })}
-        style={{ height: "80vh", backgroundColor: "#FFFFFF" }}
+        style={{ height: "65vh", backgroundColor: "#FFFFFF" }}
       />
     </div>
   );

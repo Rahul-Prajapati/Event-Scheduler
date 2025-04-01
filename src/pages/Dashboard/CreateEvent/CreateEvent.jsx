@@ -18,6 +18,8 @@ function CreateEvent() {
 
   const { username } = userData;
 
+  const [mail, setMail] = useState();
+
   const [formData, setFormData] = useState({
     eventTopic: "",
     password: "",
@@ -34,6 +36,9 @@ function CreateEvent() {
   });
 
   const handleEditEvent = (selectedEvent) => {
+    setMail(selectedEvent.participants.map(p => p.email) );
+
+
     setFormData({
         eventTopic: selectedEvent.topic || "",  // Mapping topic → eventTopic
         password: selectedEvent.password || "",
@@ -50,6 +55,8 @@ function CreateEvent() {
             ? selectedEvent.participants.map(p => p.email) 
             : (""), // Extracting emails from participants
     });
+
+    // setMail(formData.emails.join(","));
 };
 
   useEffect(() => {
@@ -106,6 +113,8 @@ function CreateEvent() {
       ...prev,
       emails: emailArray,
     }));
+
+    setMail(emailArray.join(","));
   };
 
   const handleSave = () => {
@@ -361,9 +370,10 @@ function CreateEvent() {
                 <input
                   type="text"
                   placeholder="example1@gmail.com, example2@gmail.com"
-                  value={formData.emails.join(", ")}
+                  // value={formData.emails.join(", ")}
+                  value={mail}
                   onBlur={handleEmailChange} // Update on blur (lose focus)
-                  onChange={handleEmailChange} // Update in real-time
+                  onChange={(e) => setMail(e.target.value)} // Update in real-time
                 />
               </div>
 

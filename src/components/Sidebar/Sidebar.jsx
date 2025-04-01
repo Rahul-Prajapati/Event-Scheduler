@@ -4,12 +4,16 @@ import { FaLink } from "react-icons/fa"; // Link icon
 import { FaCalendarAlt } from "react-icons/fa"; // Booking (Calendar) icon
 import { FaClock } from "react-icons/fa"; // Availability (Clock) icon
 import { FaCog } from "react-icons/fa";
+import { CiLogout } from "react-icons/ci";
 import Logo from '../../assets/WebAppColorLogo.png'
 import ProfilePic from "../../assets/UserDP.png";
 import './Sidebar.css'
+import { toastSuccess } from '../../utils';
 
 
 const Sidebar = ({ activeItem, setActiveItem }) => {
+
+    const [logoutToggle, setLogoutToggle] = useState(false);
 
     const userData = JSON.parse(localStorage.getItem("user") || "{}");
 
@@ -24,6 +28,12 @@ const Sidebar = ({ activeItem, setActiveItem }) => {
 
     const menuItems = ["Events", "Booking", "Availability", "Settings"];
     const icons = [<FaLink size={24} />, <FaCalendarAlt size={24} />, <FaClock size={24} />, <FaCog size={24} />];
+
+    const handleLogout = ()=>{
+        localStorage.removeItem("token");
+        toastSuccess("Successfully Logout !!!");
+        navigate("/signin"); 
+    }
 
     return (
         <div className="sidebar">
@@ -64,7 +74,19 @@ const Sidebar = ({ activeItem, setActiveItem }) => {
             )}
 
             <div className="SidebarDown">
-                <div className='logoutDiv'>
+
+                { logoutToggle && 
+
+                <div className='logoutDiv' 
+                     style={{ width: "70%", backgroundColor: "#F3F3F1"}} 
+                     onClick={handleLogout}>
+                    <CiLogout size={24} />
+                    <p className='signout'>Sign out</p>
+                </div>
+
+                }
+
+                <div className='logoutDiv' onClick={()=> setLogoutToggle(!logoutToggle)} >
                     <img className='userDP' src={ProfilePic} alt="UserDP" />
                     <p>{firstname} {lastname}</p>
                 </div>

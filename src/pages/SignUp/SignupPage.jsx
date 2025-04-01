@@ -183,7 +183,7 @@ const SignupPage = () => {
                   onChange={(e) => setFormData({ ...formData, terms: e.target.checked })}
                 />
                 <label htmlFor="terms">
-                  By creating an account, I agree to our <span>Terms of use</span>  and <span>Privacy Policy</span>
+                  By creating an account, I agree to our <span className='underline'>Terms of use</span>  and <span className='underline'>Privacy Policy</span>
                 </label>
 
               </div>

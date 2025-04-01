@@ -75,7 +75,7 @@ if (data.logout) {
 
           <hr className='Line'/>
 
-          <div className='credentials-box'>
+          <div className='credentials-box' style={{ width: "50%"}} >
 
             <label className='Setting-label' htmlFor="firstname">First name</label>
             <input

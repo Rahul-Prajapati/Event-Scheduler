@@ -1,0 +1,46 @@
+.availability-section{
+  margin: 1rem 0rem;
+}
+
+.tabs-container-aval {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .tabs-aval {
+    display: flex;
+    background: #e5e7eb;
+    padding: 8px;
+    border-radius: 8px;
+  }
+  
+  .tab-aval {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    color: #6b7280;
+  }
+  
+  .tab-aval.active {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: black;
+  }
+  
+  .tab-content-aval {
+    margin-top: 16px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+  }
+  

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useBookEvent } from "../../context/BookEventContext";
-import { formatDateDDMON } from "../../utils";
+import { formatDateDDMON, getEventTimeRange } from "../../utils";
 import "./BookCard.css"
 
 const BookCard = ({ event, setSelectedEvent }) => {
@@ -10,15 +10,14 @@ const BookCard = ({ event, setSelectedEvent }) => {
         <div className="BookEventCard">
             <div>
                 <p>{formatDateDDMON(event.date)}</p>
-                <p className="EventTimeDetails">{event.time}</p>
+                {/* <p className="EventTimeDetails">{event.time} {event.ampm}</p> */}
+                <p className="EventTimeDetails">{getEventTimeRange(event.time, event.ampm, event.duration)}</p>
 
             </div>
 
             <div>
                 <p className="eventTopic">{event.topic}</p>
             </div>
-
-            {/* <p>{event.userStatus }</p> */}
 
 
             <div>
@@ -40,8 +39,6 @@ const BookCard = ({ event, setSelectedEvent }) => {
                         Rejected
                     </p>
                 ) : null}
-
-{/* onClick={handleStatus(event._id)} */}
 
             </div>
 

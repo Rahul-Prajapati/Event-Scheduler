@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import './Event.css'
 import Sidebar from '../../../components/Sidebar/Sidebar'
 import Header from '../../../components/Header/Header';
-import { toastSuccess, toastError, formatDateDDMON } from '../../../utils';
+import { toastSuccess, toastError, formatDateDDMON, getEventTimeRange } from '../../../utils';
 import { CiEdit } from "react-icons/ci";
 import { FiCopy } from "react-icons/fi";
-import { FaEdit, FaTrash, FaToggleOn, FaToggleOff } from "react-icons/fa";
+import { FaEdit, FaTrash, FaToggleOn, FaToggleOff, FaExclamationCircle } from "react-icons/fa";
 import { useEvent } from '../../../context/EventContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -70,12 +70,22 @@ function Events() {
                   <div className='eventDetails'>
                     <h3 className='topic'>{event.topic}</h3>
                     <p className='dateMON'>{formatDateDDMON(event.date)}</p> 
-                    <p style={{color: event.backgroundColor}}>{event.time} {event.ampm}</p>
+                    <p style={{color: event.backgroundColor}}>{getEventTimeRange(event.time, event.ampm, event.duration)}</p>
                     <span className='color7E'>{event.duration} hour, {event.description}</span>
 
                     <button className='EditIcon ICONS' onClick={() => navigate(`/createEvent/${event._id}`)}>
                         <CiEdit size={20} />
                       </button>
+
+                      {event.hasConflict && (
+        <div className="conflict-warning">
+            <FaExclamationCircle size={16} color="red" />
+            <span className="warning-label">Conflict of timing</span>
+        </div>
+    )}
+
+
+
                   </div>
 
                   <hr className='cardLine' />

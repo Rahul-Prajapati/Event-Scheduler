@@ -85,7 +85,7 @@ const LoginPage = () => {
           </button>
 
           <p className='signup-link'>
-            Don't have an account? <span onClick={() => navigate('/signup')} >Sign up</span>
+            Don't have an account? <span className='underline' onClick={() => navigate('/signup')} >Sign up</span>
           </p>
 
         </div>

@@ -37,23 +37,54 @@ export const EventProvider = ({ children }) => {
             });
       
             if (!response.ok) {
-              throw new Error("Failed to submit form data");
+                const errorData = await response.json(); // Parse the error response from backend  
+                toastError(errorData.message);              
             }
       
             const data = await response.json();
             toastSuccess(data.message);
-            console.log("Success:", data);
             navigate("/events");
           } catch (error) {
-            toastError(data.message);
-            console.error("Error:", error);
+            // toastError(data.message);
+            console.log("Error:", error);
           }
             
     }
+
+    // const isTimeOverlapping = (event1, event2) => {
+    //     console.log("Timeoverlapping");
+    //     const start1 = formatDate(event1.date, event1.time, event1.ampm);
+    //     const end1 = new Date(start1.getTime() + event1.duration * 60 * 60 * 1000); // Add duration
+    
+    //     const start2 = formatDate(event2.date, event2.time, event2.ampm);
+    //     const end2 = new Date(start2.getTime() + event2.duration * 60 * 60 * 1000);
+    
+    //     return (start1 < end2 && start2 < end1); // Returns true if overlapping
+    // };
+
+    const isTimeOverlapping = (event1, event2) => {
+        try {
+            console.log("Timeoverlapping");
+            if (!event1 || !event2) return false; // Ensure valid inputs
+            
+            // Convert event times to comparable formats (if necessary)
+            const startTime1 = new Date(event1.date);
+            const endTime1 = new Date(startTime1.getTime() + event1.duration * 60 * 1000);
+            
+            const startTime2 = new Date(event2.date);
+            const endTime2 = new Date(startTime2.getTime() + event2.duration * 60 * 1000);
+    
+            // Check if the events overlap
+            return startTime1 < endTime2 && startTime2 < endTime1;
+        } catch (error) {
+            console.error("Error in isTimeOverlapping:", error);
+            return false; // Default to no conflict if an error occurs
+        }
+    };
     
 
     const GetEventDetails = async () =>{
-
+    
         if (!userId) return;
 
         try {
@@ -65,11 +96,34 @@ export const EventProvider = ({ children }) => {
                 }
             });
             
-            const data = await response.json();
-            console.log(data)
-            setEvents(data);
+            // const data = await response.json();
+            // console.log(data)
+            // setEvents(data);
+            const { EventsDetails, acceptedEventDetails } = await response.json();
+            console.log(EventsDetails);
+            console.log(acceptedEventDetails);
+            // Detect conflicts
+            // const updatedEvents = EventsDetails.map(event => ({
+            //     ...event,
+            //     hasConflict: acceptedEventDetails.some(acceptedEvent =>
+            //         isTimeOverlapping(event, acceptedEvent)
+            //     )
+            // }));
+
+            const updatedEvents = EventsDetails.map(event => ({
+                ...event,
+                hasConflict: Array.isArray(acceptedEventDetails) && acceptedEventDetails.some(acceptedEvent =>
+                    isTimeOverlapping(event, acceptedEvent)
+                )
+            }));
+
+            console.log(updatedEvents);
+
+    
+            setEvents(updatedEvents); // Update UI state
+    
           } catch (error) {
-            toastError(error);
+            toastError(error|| "Something went wrong");
           } finally {
             // if(events.length > 0)
                     setLoading(false);
@@ -137,7 +191,7 @@ export const EventProvider = ({ children }) => {
     // Function to change event status (boolean toggle)
     const toggleEventStatus = async (eventId, currentStatus) => {
 
-        console.log(eventId, !currentStatus)
+        console.log(eventId, currentStatus)
         try {
             // const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/event/update-status?eventId=${eventId}&isActive=${!currentStatus}`, {
             //     method: "PUT",
@@ -156,7 +210,7 @@ export const EventProvider = ({ children }) => {
                 },
                 body: JSON.stringify({
                     eventId: eventId,  
-                    isActive: !currentStatus
+                    isActive: currentStatus
                 })
             });
 

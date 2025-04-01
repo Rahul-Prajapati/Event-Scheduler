@@ -90,5 +90,16 @@
     font-size: 1.2em;
     color: #676B5F;
   }
+
+  .conflict-warning{
+    position: absolute;
+    top: 0px;
+    left: 16px;
+  }
+
+  .warning-label{
+    color: #5A5A5A;
+    font-size: 10px;
+  }
   
   

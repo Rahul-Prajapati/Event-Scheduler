@@ -1,0 +1,154 @@
+/* .availability-container {
+  width: 60%;
+  margin: auto;
+  padding: 20px;
+  border: 2px solid #007BFF;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.activity, .timezone {
+  font-size: 16px;
+}
+
+.activity span, .timezone span {
+  color: blue;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.availability-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.availability-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.day-label {
+  font-weight: bold;
+}
+
+.time-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.time-slot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="time"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+}
+
+.remove-btn {
+  color: red;
+}
+
+.clone-btn {
+  color: gray;
+}
+
+.add-slot-btn {
+  color: green;
+}
+
+.save-btn {
+  margin-top: 15px;
+  padding: 8px 15px;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+
+.Availability-check{
+
+  background-color: var(--blue-color);
+
+} */
+
+
+.availability-container {
+    background: var(--white-color);
+    padding: 2rem;
+    border-radius: 2rem;
+    margin: 1rem 0rem;
+    height: 60vh;
+    width: 50vw;
+}
+
+.day-row {
+  /* display: flex; */
+  display: grid;
+  grid-template-columns: .10fr .2fr .5fr .2fr;
+  align-items: flex-start;
+  margin: 5px 0;
+}
+
+.unavailable-text {
+  margin-left: 10px;
+  color: gray;
+}
+
+.time-slot {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 20px;
+}
+
+.aval-time-input{
+  width: 120px;
+  padding: 5px;
+}
+
+/* button {
+  margin-left: 10px;
+  cursor: pointer;
+} */
+
+.btn-add{
+  margin-left: 10px;
+  cursor: pointer;
+  width: 20px;
+
+
+}
+.save-btn {
+  margin-top: 10px;
+  background-color: #1877F2;
+  color: white;
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+}
