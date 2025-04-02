@@ -11,13 +11,21 @@ import { useNavigate } from 'react-router-dom';
 
 function Events() {
 
-  const { userId, events, loading, GetEventDetails, DeleteEventDetails, toggleEventStatus}   = useEvent(useContext);
+  const { userId, events, loading, GetEventDetails, DeleteEventDetails, toggleEventStatus } = useEvent(useContext);
 
   const [copiedId, setCopiedId] = useState(null);
 
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
 
   const navigate = useNavigate();
+
+  useEffect(()=>{
+
+    if (userId) {
+        GetEventDetails();
+      }
+
+},[])
 
   const copyToClipboard = async (eventId, link) => {
     try {
@@ -30,17 +38,6 @@ function Events() {
       console.error("Failed to copy:", error);
     }
   };
-
-  // const formatDateDDMON = (dateString) => {
-  //   const date = new Date(dateString);
-  //   return date.toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "short" });
-  // };
-
-//   useEffect(()=>{
-
-//     GetEventDetails();
-
-// },[userId])
 
   return (
     <div className='DashboardContainer'>
@@ -58,7 +55,7 @@ function Events() {
           <div className="event-grid">
             {loading ? (
               <p>Loading events...</p>
-            ) : ( 
+            ) : (
               events.map(event => (
                 <div
                   key={event._id}
@@ -69,43 +66,43 @@ function Events() {
 
                   <div className='eventDetails'>
                     <h3 className='topic'>{event.topic}</h3>
-                    <p className='dateMON'>{formatDateDDMON(event.date)}</p> 
-                    <p style={{color: event.backgroundColor}}>{getEventTimeRange(event.time, event.ampm, event.duration)}</p>
+                    <p className='dateMON'>{formatDateDDMON(event.date)}</p>
+                    <p style={{ color: event.backgroundColor }}>{getEventTimeRange(event.time, event.ampm, event.duration)}</p>
                     <span className='color7E'>{event.duration} hour, {event.description}</span>
 
                     <button className='EditIcon ICONS' onClick={() => navigate(`/createEvent/${event._id}`)}>
-                        <CiEdit size={20} />
-                      </button>
+                      <CiEdit size={20} />
+                    </button>
 
-                      {event.hasConflict && (
-        <div className="conflict-warning">
-            <FaExclamationCircle size={16} color="red" />
-            <span className="warning-label">Conflict of timing</span>
-        </div>
-    )}
+                    {event.hasConflict && (
+                      <div className="conflict-warning">
+                        <FaExclamationCircle size={16} color="red" />
+                        <span className="warning-label">Conflict of timing</span>
+                      </div>
+                    )}
 
 
 
                   </div>
 
                   <hr className='cardLine' />
-                    <div className="event-icons">
-                      <button  
+                  <div className="event-icons">
+                    <button
                       style={{ color: event.isActive ? event.backgroundColor : "#676767" }}
                       className="ICONS" onClick={() => toggleEventStatus(event._id, event.isActive)}>
-                        {event.isActive ? <FaToggleOn size={20} /> : <FaToggleOff size={20} />}
-                      </button>
+                      {event.isActive ? <FaToggleOn size={20} /> : <FaToggleOff size={20} />}
+                    </button>
 
-                      <button className='ICONS' onClick={() => copyToClipboard(event._id, event.eventLink) }>
-                        <FiCopy size={20} />
-                      </button>
+                    <button className='ICONS' onClick={() => copyToClipboard(event._id, event.eventLink)}>
+                      <FiCopy size={20} />
+                    </button>
 
-                      <button className='ICONS's onClick={() => DeleteEventDetails(event._id)}>
-                        <FaTrash size={20} />
-                      </button>
+                    <button className='ICONS' s onClick={() => DeleteEventDetails(event._id)}>
+                      <FaTrash size={20} />
+                    </button>
 
-                    </div>
-                  
+                  </div>
+
                 </div>
               ))
             )}

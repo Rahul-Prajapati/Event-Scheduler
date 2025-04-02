@@ -6,23 +6,24 @@ export const EventContext = createContext();
 
 export const EventProvider = ({ children }) => {
 
-    // const navigate = useNavigate();
+    const [userData, setUserData] = useState(() => {
+        return JSON.parse(localStorage.getItem("user") || "{}");
+      });
    
-
-    const userData = JSON.parse(localStorage.getItem("user") || "{}");
-
-    const  userId  = userData._id;
+    const [ userId, SetuserId]  = useState(userData?._id);
 
     console.log(userId);
 
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(()=>{
+    // useEffect(()=>{
 
-        GetEventDetails();
+    //     if (userId) {
+    //         GetEventDetails();
+    //       }
     
-    },[userId])
+    // },[])
 
     const CreateNewEvent = async(payload, navigate) =>{
         try {
@@ -42,39 +43,49 @@ export const EventProvider = ({ children }) => {
             }
       
             const data = await response.json();
+            GetEventDetails();
             toastSuccess(data.message);
             navigate("/events");
           } catch (error) {
-            // toastError(data.message);
+            toastError(error);
             console.log("Error:", error);
           }
             
     }
-
-    // const isTimeOverlapping = (event1, event2) => {
-    //     console.log("Timeoverlapping");
-    //     const start1 = formatDate(event1.date, event1.time, event1.ampm);
-    //     const end1 = new Date(start1.getTime() + event1.duration * 60 * 60 * 1000); // Add duration
+    const getEventStartTime = (event) => {
+        if (!event?.date || !event?.time || !event?.ampm) return null; // Validate input
     
-    //     const start2 = formatDate(event2.date, event2.time, event2.ampm);
-    //     const end2 = new Date(start2.getTime() + event2.duration * 60 * 60 * 1000);
+        let [hours, minutes] = event.time.split(":").map(Number);
     
-    //     return (start1 < end2 && start2 < end1); // Returns true if overlapping
-    // };
-
+        // Convert to 24-hour format using ampm field
+        if (event.ampm === "PM" && hours < 12) {
+            hours += 12; // Convert PM hours to 24-hour format
+        } else if (event.ampm === "AM" && hours === 12) {
+            hours = 0; // Midnight correction
+        }
+    
+        const eventDate = new Date(event.date);
+        eventDate.setHours(hours, minutes, 0, 0); // Set correct hours and minutes
+    
+        return eventDate;
+    };
+    
     const isTimeOverlapping = (event1, event2) => {
         try {
-            console.log("Timeoverlapping");
-            if (!event1 || !event2) return false; // Ensure valid inputs
-            
-            // Convert event times to comparable formats (if necessary)
-            const startTime1 = new Date(event1.date);
-            const endTime1 = new Date(startTime1.getTime() + event1.duration * 60 * 1000);
-            
-            const startTime2 = new Date(event2.date);
-            const endTime2 = new Date(startTime2.getTime() + event2.duration * 60 * 1000);
+            console.log("Checking time overlap...");
     
-            // Check if the events overlap
+            const startTime1 = getEventStartTime(event1);
+            const startTime2 = getEventStartTime(event2);
+    
+            if (!startTime1 || !startTime2) return false; // Ensure valid times
+    
+            // Convert duration from hours to milliseconds
+            const endTime1 = new Date(startTime1.getTime() + event1.duration * 60 * 60 * 1000);
+            const endTime2 = new Date(startTime2.getTime() + event2.duration * 60 * 60 * 1000);
+    
+            console.log(`Event 1: ${startTime1} - ${endTime1}`);
+            console.log(`Event 2: ${startTime2} - ${endTime2}`);
+    
             return startTime1 < endTime2 && startTime2 < endTime1;
         } catch (error) {
             console.error("Error in isTimeOverlapping:", error);
@@ -82,7 +93,7 @@ export const EventProvider = ({ children }) => {
         }
     };
     
-
+ 
     const GetEventDetails = async () =>{
     
         if (!userId) return;
@@ -96,19 +107,9 @@ export const EventProvider = ({ children }) => {
                 }
             });
             
-            // const data = await response.json();
-            // console.log(data)
-            // setEvents(data);
             const { EventsDetails, acceptedEventDetails } = await response.json();
             console.log(EventsDetails);
             console.log(acceptedEventDetails);
-            // Detect conflicts
-            // const updatedEvents = EventsDetails.map(event => ({
-            //     ...event,
-            //     hasConflict: acceptedEventDetails.some(acceptedEvent =>
-            //         isTimeOverlapping(event, acceptedEvent)
-            //     )
-            // }));
 
             const updatedEvents = EventsDetails.map(event => ({
                 ...event,
@@ -155,8 +156,8 @@ export const EventProvider = ({ children }) => {
             console.log("Success:", data);
             navigate("/events")
         } catch (error) {
-            // toastError(data.message);
-            console.error("Error:", error);
+            toastError(error);
+
         }
 
     }
@@ -184,7 +185,7 @@ export const EventProvider = ({ children }) => {
     
         } catch (error) {
             console.error("Error deleting event:", error);
-            toastError(error.message);
+            toastError(error);
         }
     };
 
@@ -193,15 +194,6 @@ export const EventProvider = ({ children }) => {
 
         console.log(eventId, currentStatus)
         try {
-            // const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/event/update-status?eventId=${eventId}&isActive=${!currentStatus}`, {
-            //     method: "PUT",
-            //     headers:
-            //     {
-            //         "Content-Type": "application/json",
-            //         "Authorization": `${localStorage.getItem("token")}`
-            //     },
-            // });
-
             const response = await fetch(`${import.meta.env.VITE_SERVER_API}/api/event/update-status`, {
                 method: "PUT",
                 headers: {

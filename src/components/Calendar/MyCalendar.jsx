@@ -8,7 +8,7 @@ import { BookEventContext } from "../../context/BookEventContext";
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = () => {
-  const [view, setView] = useState("week"); // Default view: Week
+  const [view, setView] = useState("month"); // Default view: Week
   const [date, setDate] = useState(new Date()); // Current date
   const { allEvents, GetUserAllEvents } = useContext(BookEventContext);
   const [formattedEvents, setFormattedEvents] = useState([]);
@@ -21,17 +21,6 @@ const MyCalendar = () => {
   }, []);
 
   useEffect(() => {
-    // if (allEvents.length > 0) {
-    // const duration = event.duration || 60; // Use DB duration, default to 1 hour
-    // // const end = new Date(start.getTime() + duration * 60 * 1000);
-    // const newEvents = allEvents.map(event => ({
-    // ...event,
-    // start: new Date(`${event.date} ${event.time} ${event.ampm}`),
-    // // end: new Date(`${event.date} ${event.time} ${event.ampm}`),
-    // // Use DB duration, default to 1 hour
-    // end : new Date(start.getTime() + duration * 60 * 1000),
-    // title: event.topic,
-    // backgroundColor: event.isActive ? event.backgroundColor : "#676767",
     if (allEvents.length > 0) {
       const newEvents = allEvents.map((event) => {
         const start = new Date(`${event.date} ${event.time} ${event.ampm}`);

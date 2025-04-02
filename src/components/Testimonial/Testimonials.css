@@ -9,9 +9,9 @@
     display: flex;
   }
 
-  .left-header{
+  /* .left-header{
     width: 60%;
-  }
+  } */
 
   .left-header > img{
     height: 1.8rem;
@@ -33,6 +33,7 @@
   
   .highlight {
     color: var(--blue-color);
+    margin: 0px 5px;
   }
   
   /* Button */

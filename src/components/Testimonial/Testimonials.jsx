@@ -47,11 +47,11 @@ const Testimonials = () => {
 
       </div>
 
-      <div className="right-header">
+      {/* <div className="right-header">
         <img src={snow} alt="snow" />
         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime accusantium sint inventore quos est officia?</p>
 
-      </div>
+      </div> */}
 
       </div>
 

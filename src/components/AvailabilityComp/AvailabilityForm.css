@@ -128,8 +128,11 @@ button {
 }
 
 .aval-time-input{
-  width: 120px;
+  width: 5rem;
   padding: 5px;
+  background-color: #F3F3F1;
+  border: 0.8px solid rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
 }
 
 /* button {
