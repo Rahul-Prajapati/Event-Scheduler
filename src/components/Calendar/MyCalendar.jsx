@@ -4,6 +4,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import "./MyCalendar.css"; // Custom styling
 import { BookEventContext } from "../../context/BookEventContext";
+import { getEventTimeRange } from "../../utils";
 
 const localizer = momentLocalizer(moment);
 
@@ -24,7 +25,7 @@ const MyCalendar = () => {
     if (allEvents.length > 0) {
       const newEvents = allEvents.map((event) => {
         const start = new Date(`${event.date} ${event.time} ${event.ampm}`);
-        const duration = event.duration || 60; // Use DB duration, default to 1 hour
+        const duration = event.duration *60 || 60; // Use DB duration, default to 1 hour
         const end = new Date(start.getTime() + duration * 60 * 1000);
 
         return {
